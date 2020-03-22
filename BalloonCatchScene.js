@@ -53,7 +53,7 @@ class BalloonCatchScene extends Phaser.Scene {
 				this.input.on('pointerdown', () => {
 					gameState.score = 0; 
 					this.scene.stop('BalloonCatchScene')
-					this.scene.start('MemoryMatchScene');
+					this.scene.start('PartyHatPushScene');
 				})
 
 

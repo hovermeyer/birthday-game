@@ -1,12 +1,10 @@
-class MemoryMatchScene extends Phaser.Scene {
+class PartyHatPushScene extends Phaser.Scene {
 	constructor(){
-		super({ key: 'MemoryMatchScene' })
+		super({ key: 'PartyHatPushScene' })
 	}
 
 	preload() {
-		this.load.image('party_hat_1', 'Images/red_party_hat.png');
-		this.load.image('party_hat_2', 'Images/pink_party_hat.png');
-		this.load.image('party_hat_3', 'Images/green_party_hat.png');
+		this.load.image('party_hat', 'Images/green_party_hat.png');
 
 		this.load.image('table', 'Images/table.jpg');
 		this.load.image('codey', 'https://s3.amazonsaws.com/codecademy-content/courses/learn-phaser/physics/codey.png');
@@ -36,7 +34,7 @@ class MemoryMatchScene extends Phaser.Scene {
 			const xCoord = Math.random() * 100 + Math.round(Math.random())*360 + 20
 			const yCoord = Math.random() * 100 + Math.round(Math.random())*360 + 20
 			
-			gameState.partyHats.create(xCoord, yCoord, partyHatOptions[Math.floor(Math.random()*3)]).setScale(0.03).setDrag(0.8).setBlendMode(Phaser.BlendModes.SCREEN)
+			gameState.partyHats.create(xCoord, yCoord, 'party_hat').setScale(0.03).setDrag(0.8);
 		}
 
 		const partyHatGenLoop = this.time.addEvent({
@@ -52,7 +50,6 @@ class MemoryMatchScene extends Phaser.Scene {
 			partyHat.setImmovable();
 			partyHat.setVelocityX(0);
 			partyHat.setVelocityY(0);
-			partyHat.setBlendMode(Phaser.BlendModes.NORMAL)
 
 
 			partyHat.x = (gameState.score % 5) * 50 + 150
@@ -70,7 +67,7 @@ class MemoryMatchScene extends Phaser.Scene {
 
 				this.input.on('pointerdown', () => {
 					gameState.score = 0; 
-					this.scene.stop('MemoryMatchScene')
+					this.scene.stop('PartyHatPushScene')
 					this.scene.start('StartScene');
 				})
 
