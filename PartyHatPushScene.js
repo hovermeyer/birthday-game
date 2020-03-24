@@ -68,7 +68,7 @@ class PartyHatPushScene extends Phaser.Scene {
 				this.input.on('pointerdown', () => {
 					gameState.score = 0; 
 					this.scene.stop('PartyHatPushScene')
-					this.scene.start('PresentJamScene');
+					this.scene.start('PresentMazeScene');
 				})
 
 
