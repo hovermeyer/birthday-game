@@ -61,14 +61,14 @@ class PartyHatPushScene extends Phaser.Scene {
 
 			gameState.scoreText.setText(`Party Hats Gathered: ${gameState.score}`);
 
-			if (gameState.score ===10){
+			if (gameState.score ===10){ //Eventually debug change back to 10
 				this.physics.pause();
 				gameState.instructionText.setText("Congratulations - click to begin the next quest")
 
 				this.input.on('pointerdown', () => {
 					gameState.score = 0; 
 					this.scene.stop('PartyHatPushScene')
-					this.scene.start('StartScene');
+					this.scene.start('PresentJamScene');
 				})
 
 

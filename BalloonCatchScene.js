@@ -46,7 +46,7 @@ class BalloonCatchScene extends Phaser.Scene {
 			gameState.score += 1; 
 			gameState.scoreText.setText(`Balloons Gathered: ${gameState.score}`);
 
-			if (gameState.score ===1){ //POST DEBUG CHANGE BACK TO 100 
+			if (gameState.score ===100){ //POST DEBUG CHANGE BACK TO 100 
 				this.physics.pause();
 				gameState.instructionText.setText("Congratulations - click to begin the next quest")
 
