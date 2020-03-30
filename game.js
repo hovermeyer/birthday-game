@@ -14,7 +14,7 @@ const config = {
 			enableBody: true,
 		}
 	},
-	scene: [StartScene, BalloonCatchScene, PartyHatPushScene, PresentMazeScene]
+	scene: [StartScene, BalloonCatchScene, PartyHatPushScene, PresentMazeScene, MemoryScene]
 };
 
 const game = new Phaser.Game(config);

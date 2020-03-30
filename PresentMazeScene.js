@@ -54,7 +54,7 @@ class PresentMazeScene extends Phaser.Scene {
 
 		{x:6, y:8, type:'h'},{x:6, y:12, type:'h'},
 		
-		{x:7, y:2, type:'v'}, {x:7, y:4, type:'h'},{x:7, y:6, type:'h'},{x:7, y:10, type:'h'},{x:7, y:14, type:'h'},
+		{x:7, y:2, type:'v'}, {x:7, y:4, type:'h'},{x:7, y:6, type:'h'},{x:7, y:10, type:'h'},{x:7, y:14, type:'h'},{x:7, y:16, type:'h'},
 
 		{x:9, y:1, type:'v'},{x:9, y:3, type:'v'},{x:9, y:6, type:'v'},{x:9, y:8, type:'h'},{x:9, y:9, type:'v'},
 		{x:9, y:11, type:'v'},{x:9, y:13, type:'v'},{x:9, y:16, type:'v'},
