@@ -116,7 +116,7 @@ class MemoryScene extends Phaser.Scene {
 			this.input.on('pointerdown', () => {
 				gameState.score = 0; 
 				this.scene.stop('MemoryScene')
-				this.scene.start('PartyPushScene');
+				this.scene.start('PartyHatPushScene');
 			})
 
 		}else if (gameState.condition === "example"){
