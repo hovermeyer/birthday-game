@@ -7,7 +7,12 @@ class PartyHatPushScene extends Phaser.Scene {
 		this.load.image('party_hat', 'Images/green_party_hat.png');
 
 		this.load.image('table', 'Images/table.jpg');
-		this.load.image('codey', 'https://s3.amazonsaws.com/codecademy-content/courses/learn-phaser/physics/codey.png');
+		this.load.image('codey', 'https://s3.amazonaws.com/codecademy-content/courses/learn-phaser/physics/codey.png');
+	}
+
+	init(data){
+		gameState.firstRound = data.firstRound;
+
 	}
 
 
@@ -19,30 +24,24 @@ class PartyHatPushScene extends Phaser.Scene {
 		gameState.player = this.physics.add.sprite(10, 10, 'codey').setScale(.5);
 		gameState.instructionText = this.add.text(30, 20, 'Get All 10 party hats onto the table.', { fontSize: '15px', fill: '#000000' });
 
-
-		gameState.scoreText = this.add.text(175, 485, 'Party Hats Gathered', { fontSize: '15px', fill: '#000000' });
+		gameState.scoreText = this.add.text(175, 485, 'Party Hats Gathered ' , { fontSize: '15px', fill: '#000000' });
 
 
 
 
 		gameState.cursors = this.input.keyboard.createCursorKeys();
 
-		const partyHatOptions = ['party_hat_1','party_hat_2','party_hat_3'];
+
 		gameState.partyHats = this.physics.add.group();
 
-		const partyHatGen = () => {
+		for (let i = 0; i< 10; i++){
 			const xCoord = Math.random() * 100 + Math.round(Math.random())*360 + 20
 			const yCoord = Math.random() * 100 + Math.round(Math.random())*360 + 20
 			
 			gameState.partyHats.create(xCoord, yCoord, 'party_hat').setScale(0.03).setDrag(0.8);
 		}
 
-		const partyHatGenLoop = this.time.addEvent({
-			delay: 10,
-			callback: partyHatGen,
-			callbackScope: this,
-			repeat:9
-		});
+
 
 
 
@@ -65,10 +64,15 @@ class PartyHatPushScene extends Phaser.Scene {
 				this.physics.pause();
 				gameState.instructionText.setText("Congratulations - click to begin the next quest")
 
-				this.input.on('pointerdown', () => {
+				this.input.on('pointerup', () => {
 					gameState.score = 0; 
 					this.scene.stop('PartyHatPushScene')
-					this.scene.start('PresentMazeScene');
+
+					if (gameState.firstRound){
+						this.scene.start('PresentMazeScene',{firstRound:true});
+					}else{
+						this.scene.start('EndScene')
+					}
 				})
 
 

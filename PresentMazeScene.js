@@ -9,6 +9,9 @@ class PresentMazeScene extends Phaser.Scene {
 		this.load.image('codey', 'https://s3.amazonaws.com/codecademy-content/courses/learn-phaser/physics/codey.png');
 	}
 
+	init(data){
+		gameState.firstRound = data.firstRound
+	}
 
 	create() {
 		gameState.player = this.physics.add.sprite(450, 0, 'codey').setScale(.3);
@@ -116,7 +119,13 @@ class PresentMazeScene extends Phaser.Scene {
 		if (gameState.player.y >= 480){
 			gameState.score = 0; 
 			this.scene.stop('PresentMazeScene')
-			this.scene.start('StartScene');
+
+			if (gameState.firstRound){
+				this.scene.start('LaserTagScene',{firstRound:true});
+			}else{
+				this.scene.start('EndScene')
+			}
+
 		}
 
 	}

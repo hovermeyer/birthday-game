@@ -8,6 +8,10 @@ class MemoryScene extends Phaser.Scene {
 		this.load.image('codey', 'https://s3.amazonaws.com/codecademy-content/courses/learn-phaser/physics/codey.png');
 	}
 
+	init(data){
+		gameState.firstRound = data.firstRound;
+	}
+
 
 	create() {
 		gameState.player = this.physics.add.sprite(250, 250, 'codey').setScale(.5);
@@ -35,9 +39,12 @@ class MemoryScene extends Phaser.Scene {
 
 		gameState.rectangles[i].setInteractive();
 		gameState.rectangles[i].on('pointerup',()=>{
+			
+
+			var timer = this.time.delayedCall(250, this.removeHighlights);
 			if (gameState.condition === 'active'){
 				gameState.highlight[i].setVisible(true);
-				setTimeout(()=>{gameState.highlight[i].setVisible(false)},250)
+
 				if (gameState.order[gameState.currentRectangle] === i) {
 					gameState.currentRectangle ++;
 					if (gameState.currentRectangle > gameState.currentStreak){
@@ -68,24 +75,25 @@ class MemoryScene extends Phaser.Scene {
 		gameState.scoreText = this.add.text(175, 485, 'Current Streak: ' + gameState.currentStreak, { fontSize: '15px', fill: '#000000' });
 
 		gameState.condition = "example";
+		gameState.timerEvent = this.time.addEvent({ delay: 500, callback: this.highlightRectangle, callbackScope: this, loop: true });
 
-		gameState.moves0 = this.tweens.add(
-      {targets:[gameState.highlight[0],gameState.highlight[1],gameState.highlight[2],gameState.highlight[3]],
-			width:200,
-			height:200,
-      ease:'Linear',
-      duration:200,
-      repeat:0,
-			yoyo:true, 
-			onComplete:this.nextRectangle }
-		);
+
 
 
 	}
 
 
 	highlightRectangles(){
-		gameState.timer = setInterval(this.highlightRectangle,500)
+		gameState.timerEvent.paused = false;
+	}
+
+
+	removeHighlights(){
+		gameState.highlight[0].setVisible(false);
+		gameState.highlight[1].setVisible(false);
+		gameState.highlight[2].setVisible(false);
+		gameState.highlight[3].setVisible(false);
+		//gameState.flashEvent.pause();
 	}
 
 	highlightRectangle() {
@@ -103,20 +111,27 @@ class MemoryScene extends Phaser.Scene {
 		}else{
 			gameState.currentRectangle = 0;
 			gameState.condition = "active";
-			clearTimeout(gameState.timer)
 			gameState.hide = false;
+			gameState.timerEvent.paused = true;
+
 		}
 
 	}
 
 	update() {
 
-		if (gameState.currentStreak === 10){
+		if (gameState.condition != "complete" && gameState.currentStreak === 10){
+			gameState.condition = "complete"
 			gameState.instructionText.setText("Congratulations! Click for next quest.");
 			this.input.on('pointerdown', () => {
-				gameState.score = 0; 
+				gameState.score = 0; 				
 				this.scene.stop('MemoryScene')
-				this.scene.start('PartyHatPushScene');
+				
+				if (gameState.firstRound){
+					this.scene.start('PartyHatPushScene',{firstRound:true});
+				}else{
+					this.scene.start('EndScene')
+				}
 			})
 
 		}else if (gameState.condition === "example"){

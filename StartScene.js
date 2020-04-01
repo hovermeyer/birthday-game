@@ -4,11 +4,12 @@ class StartScene extends Phaser.Scene {
 	}
 
 	create() {
+		gameState.firstRound = true; 
     this.add.text( 30, 100, 
-      "Happy 10th Birthday Darren :) \n Help us make today a great birthday. \n Click to start!", {fill: '#000000', fontSize: '20px', align:'center'})
-		this.input.on('pointerdown', () => {
+			"We are trying to have a party. \n We need your help! \n Complete quests to get what we need. \n Click to start!", {fill: '#000000', fontSize: '20px', align:'center'})
+		this.input.on('pointerup', () => {
 			this.scene.stop('StartScene')
-			this.scene.start('BalloonCatchScene');//Replace with Balloon Catch Scene
+			this.scene.start('BalloonCatchScene',{firstRound:true});
 		})
 	}
 }

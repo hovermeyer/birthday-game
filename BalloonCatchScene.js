@@ -3,6 +3,11 @@ class BalloonCatchScene extends Phaser.Scene {
 		super({ key: 'BalloonCatchScene' })
 	}
 
+	init(data){
+		gameState.firstRound = data.firstRound;
+
+	}
+
 	preload() {
 		this.load.image('balloon', 'Images/balloons.png');//Image by <a href="https://pixabay.com/users/maciej326-1771256/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1902845">Maciej Szewczyk</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1902845">Pixabay</a>
 		this.load.image('platform', 'https://s3.amazonaws.com/codecademy-content/courses/learn-phaser/physics/platform.png');
@@ -46,14 +51,18 @@ class BalloonCatchScene extends Phaser.Scene {
 			gameState.score += 1; 
 			gameState.scoreText.setText(`Balloons Gathered: ${gameState.score}`);
 
-			if (gameState.score ===100){ //POST DEBUG CHANGE BACK TO 100 
+			if (gameState.score ===100){ 
 				this.physics.pause();
 				gameState.instructionText.setText("Congratulations - click to begin the next quest")
 
-				this.input.on('pointerdown', () => {
+				this.input.on('pointerup', () => {
 					gameState.score = 0; 
 					this.scene.stop('BalloonCatchScene')
-					this.scene.start('MemoryScene');
+					if (gameState.firstRound){
+						this.scene.start('MemoryScene',{firstRound:true});
+					}else{
+						this.scene.start('EndScene')
+					}
 				})
 
 
